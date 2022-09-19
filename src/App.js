@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { ErrorBoundary } from 'react-error-boundary';
 
-function App() {
+import './App.css';
+import WeatherData from './components/WeatherData/WeatherData';
+
+function ErrorHandler({ error }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div role="alert">
+      <p>An error occurred:</p>
+      <pre>{error.message}</pre>
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <ErrorBoundary FallbackComponent={ErrorHandler}>
+      <div className="container">
+        <WeatherData />
+      </div>
+    </ErrorBoundary>
+  );
+}
